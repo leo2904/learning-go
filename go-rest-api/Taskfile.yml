@@ -1,0 +1,27 @@
+version: "3"
+
+tasks:
+    build:
+        desc: Build the app
+        cmds:
+        - GOFLAGS=-mod=mod go build -o bin/go-rest-api cmd/server/main.go 
+
+    run: 
+        desc: Run the app
+        cmds:
+        - GOFLAGS=-mod=mod go run cmd/server/main.go
+
+    swagger.gen:
+        desc: Generate Go code
+        cmds:
+        - GOFLAGS=-mod=mod go generate github.com/leo2904/learning-go/go-rest-api/cmd/server github.com/leo2904/learning-go/go-rest-api/swagger
+
+    swagger.validate:
+        desc: Validate swagger
+        cmds:
+        - swagger validate swagger/swagger.yml
+
+    swagger.doc:
+        desc: Doc for swagger
+        cmds:
+        - sudo docker run -i yousan/swagger-yaml-to-html < swagger/swagger.yml > doc/index.html
